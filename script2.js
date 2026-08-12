@@ -1,5 +1,5 @@
 // local storage se link taki seedhe na hat jaye
-
+// remove butto nka feature add karna he aur local storage figure out karna he
 document.addEventListener('DOMContentLoaded', () => {
     //saare element ka const baby
     let product1 ={ id:1, price:300, name : "shoes"};
@@ -7,7 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let product3 ={ id:3 , price:600,name:"silver" };
 
     let products =[product1,product2,product3];
-    let cart =JSON.parse.localStorage.getItem(cart) || [];
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    
+    
 
     const emptyCartMessage = document.getElementById("empty-cart");
     const checkoutbtn = document.getElementById("checkout-btn");
@@ -15,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartItems = document.getElementById("cart-items");
     const cartTotal = document.getElementById('cart-total');
     const totalPrice = document.getElementById("total-price");
-    
+    renderCart();
 
     // product list show karna
       for(let i=0;i<3;i++){
@@ -31,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let itemId =parseInt(e.target.getAttribute("data-id"));
         let item = products.find((p) =>p.id === itemId);
         cart.push(item);
+        localStorage.setItem("cart", JSON.stringify(cart));
         renderCart();
     }
     })
@@ -61,11 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
     //checkout wala function
     checkoutbtn.addEventListener("click",()=>{
         cart.length =0;
+        localStorage.clear();
         emptyCartMessage.classList.remove("hidden");
         renderCart();
         cartTotal.classList.add("hidden")
         alert("deal has beeen struck")
     })
-    
-
 })
